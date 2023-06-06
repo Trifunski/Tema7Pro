@@ -5,10 +5,14 @@
 package com.ut7pro.ut7pro.controllers;
 
 import com.ut7pro.ut7pro.exceptions.NotFoundException;
+import com.ut7pro.ut7pro.models.Orders;
 import com.ut7pro.ut7pro.models.User;
+import com.ut7pro.ut7pro.services.OrderService;
 import com.ut7pro.ut7pro.services.UserService;
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +24,14 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private OrderService orderService;
+
+    @GetMapping("/users/{id}/orders")
+    public Optional<Orders> getOrdersByUserId(@PathVariable("id") Long id) {
+        return orderService.getOrdersByUserId(id);
+    }
 
     @GetMapping("/users")
     public List<User> getUsers() {
